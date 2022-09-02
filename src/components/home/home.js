@@ -18,7 +18,8 @@ console.log( "response from api : ",response)
 dispatch(addMovies(response.data))
 }
 fetchMovie()
-    },[])
+// eslint-disable-next-line
+    },[movieText])
     return ( <>
     
         <div className="banner-img">
