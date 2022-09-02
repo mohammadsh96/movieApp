@@ -6,7 +6,7 @@ export default function Footer() {
     <div className='footer'>
 
       <div>
-        © 2020 Copyright:
+        © 2022 Copyright:
       </div>
         <a className='text-white' href='https://mohammadsh96.github.io/portfoilo/'>
           <div>Mohammad Alshraideh</div>
