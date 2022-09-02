@@ -7,7 +7,7 @@ export const fetchAsyncMovies =createAsyncThunk("movies/fetchAsyncMovies" ,
  async ()=>{
     const movieText ="Harry"
     const response = await  baseURL.get(`?apikey=${APIkey}&s=${movieText}&type=movie`)
-    console.log( "response from api : ",response)
+    // console.log( "response from api : ",response)
     return (response.data)
     
 })
@@ -15,7 +15,14 @@ export const fetchAsyncShows =createAsyncThunk("movies/fetchAsyncShows" ,
  async ()=>{
     const seriesText ="spider"
     const response = await  baseURL.get(`?apikey=${APIkey}&s=${seriesText}&type=series`)
-    console.log( "response from api : ",response)
+    // console.log( "response from api : ",response)
+    return (response.data)
+    
+})
+export const fetchAsyncMovieDetails =createAsyncThunk("movies/fetchAsyncMovieDetails" ,
+ async (id)=>{
+    const response = await  baseURL.get(`?apikey=${APIkey}&i=${id}&Plot=full`)
+    console.log( "response from details id : ",response)
     return (response.data)
     
 })
@@ -23,6 +30,7 @@ export const fetchAsyncShows =createAsyncThunk("movies/fetchAsyncShows" ,
 const initialState ={
     movies:{},
     shows:{},
+    selected:{},
 }
 const movieSlice = createSlice({
 
@@ -30,10 +38,9 @@ const movieSlice = createSlice({
     initialState,
     reducers:{
 
-        addMovies:(state , {payload})=>{
-            state.movies =payload;
-            
-        },
+        removeSelectedMovie :(state)=>{
+state.removeSelectedMovie={};
+        }
 
     },
     extraReducers:{
@@ -52,10 +59,14 @@ const movieSlice = createSlice({
     return {...state ,shows:payload}
 },
 
+[fetchAsyncMovieDetails.fulfilled] : (state , {payload})=>{
+    console.log("fulfilled",state);
+    return {...state ,selected:payload}
+},
     },
 });
-export const {addMovies} =movieSlice.actions;
+export const {removeSelectedMovie} =movieSlice.actions;
 export const getAllShows = (state)=>state.movies.shows
-
+export const getSelectedMovie = (state)=>state.movies.selected
 export const getAllMovies = (state)=>state.movies.movies
 export default movieSlice.reducer;
